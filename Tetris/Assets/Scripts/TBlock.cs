@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class TBlock : MonoBehaviour
 {
     private float previousTime;
     public float fallTime = 0.8f;
-    public static int height = 20; //This needs to match the background height
-    public static int width = 10; //This needs to match the background width
     public Vector3 rotationPoint;
-    private static Transform[ , ] grid = new Transform[width, height];
 
     // Update is called once per frame
     void Update()
@@ -48,61 +42,11 @@ public class TBlock : MonoBehaviour
             {
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
-                CheckForLines();
+                FindObjectOfType<GameManager>().checkForRows();
                 this.enabled = false;
-                FindObjectOfType<PieceSpawner>().NewPiece();
+                FindObjectOfType<PieceSpawner>().spawnNext();
             }
             previousTime = Time.time;
-        }
-    }
-
-    void CheckForLines()
-    {
-        for(int i = height - 1; i >= 0; i--)
-        {
-            if (HasLine(i))
-            {
-                DeleteLine(i);
-                RowDown(i);
-            }
-        }
-    }
-
-    bool HasLine(int i)
-    {
-        for(int j = 0; j < width; j++)
-        {
-            if(grid[j, i] == null)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    void DeleteLine(int i)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            Destroy(grid[j, i].gameObject);
-            grid[j, i] = null;
-        }
-    }
-
-    void RowDown(int i)
-    {
-        for(int y = i; y < height; y++)
-        {
-            for(int j = 0; j < width; j++)
-            {
-                if(grid[j, y] != null)
-                {
-                    grid[j, y - 1] = grid[j, y];
-                    grid[j, y] = null;
-                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0); 
-                }
-            }
         }
     }
 
@@ -112,22 +56,10 @@ public class TBlock : MonoBehaviour
         {
             int boxWidth = Mathf.RoundToInt(children.transform.position.x);
             int boxHeight = Mathf.RoundToInt(children.transform.position.y);
-
-            grid[boxWidth, boxHeight] = children;
+            GameManager.grid[boxWidth, boxHeight] = children;
         }
 
-        isGameOver();
-    }
-
-    void isGameOver()
-    {
-        for(int j = 0; j < width; j++)
-        {
-            if(grid[j, height - 2] != null)
-            {
-                FindObjectOfType<GameManager>().gameOver();
-            }
-        }
+        FindObjectOfType<GameManager>().isGameOver();
     }
 
     bool ValidMove()
@@ -137,16 +69,15 @@ public class TBlock : MonoBehaviour
             int boxWidth = Mathf.RoundToInt(children.transform.position.x);
             int boxHeight = Mathf.RoundToInt(children.transform.position.y);
 
-            if(boxWidth < 0 || boxWidth >= width)
+            if(boxWidth < 0 || boxWidth >= GameManager.width)
             {
                 return false;
             }
-            if(boxHeight < 0 || boxHeight >= height)
+            if(boxHeight < 0 || boxHeight >= GameManager.height)
             {
                 return false;
             }
-
-            if(grid[boxWidth, boxHeight] != null)
+            if(GameManager.grid[boxWidth, boxHeight] != null)
             {
                 return false;
             }
