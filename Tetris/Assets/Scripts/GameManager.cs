@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static int height = 20; //This needs to match the background height
+    public static int height = 19; //This needs to match the background height
     public static int width = 10; //This needs to match the background width
     public static Transform[,] grid = new Transform[width, height];
 
@@ -13,8 +12,11 @@ public class GameManager : MonoBehaviour
     public AudioClip deleteLine;
 
     private int rowsCleared = 0;
-    public int currentLevel = 0;
+    public static int currentLevel = 0;
     public static float fallTime = 1.0f;
+
+    public Text levelText;
+    public Text numLines;
     
 
     public void gameOver()
@@ -55,15 +57,17 @@ public class GameManager : MonoBehaviour
             source.PlayOneShot(deleteLine);
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
-
-            ++rowsCleared;
-            increaseSpeed();
         }
+
+        ++rowsCleared;
+        increaseSpeed();
     }
 
     public void updateLevel()
     {
-        currentLevel = rowsCleared / 10;
+        currentLevel = rowsCleared / 5;
+        Debug.Log("Rows Cleared: " + rowsCleared);
+        levelText.text = "Level " + (currentLevel + 1).ToString();
     }
 
     public void increaseSpeed()

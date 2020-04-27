@@ -4,7 +4,6 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class TBlock : MonoBehaviour
 {
     private float previousTime;
-    //public float fallTime = 1f;
     private float fallTime = GameManager.fallTime;
     public Vector3 rotationPoint;
 
