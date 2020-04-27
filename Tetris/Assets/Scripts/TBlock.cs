@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class TBlock : MonoBehaviour
 {
     private float previousTime;
-    public float fallTime = 0.8f;
+    //public float fallTime = 1f;
+    private float fallTime = GameManager.fallTime;
     public Vector3 rotationPoint;
 
     // Update is called once per frame
     void Update()
     {
+        FindObjectOfType<GameManager>().updateLevel();
+        //FindObjectOfType<GameManager>().increaseSpeed();
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) //Moves block to the left
         {
             transform.position += new Vector3(-1, 0, 0);
@@ -39,7 +44,7 @@ public class TBlock : MonoBehaviour
         {
             transform.position += new Vector3(0, -1, 0);
             if (!ValidMove())
-            {
+            { 
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
                 FindObjectOfType<GameManager>().checkForRows();
