@@ -10,7 +10,7 @@ public class TBlock : MonoBehaviour
     void Update()
     {
         FindObjectOfType<GameManager>().updateLevel();
-        //FindObjectOfType<GameManager>().increaseSpeed();
+        FindObjectOfType<GameManager>().increaseSpeed();
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) //Moves block to the left
         {

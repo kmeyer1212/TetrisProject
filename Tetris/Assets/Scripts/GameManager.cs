@@ -15,26 +15,33 @@ public class GameManager : MonoBehaviour
     public static int currentLevel = 0;
     public static float fallTime = 1.0f;
     public static bool hasStarted = false;
+    public bool over = false;
 
     public Text levelText;
     public Text numLines;
     public Text score;
+
     public static int scoreValue = 0;
+    public static int finalScoreVal;
 
     public void gameOver()
     {
+        over = true;
         scoreValue = 0;
         hasStarted = false;
-        currentLevel = 0;
-        fallTime = 0;
-        rowsCleared = 0;
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     public void updateScore()
     {
-        scoreValue = (scoreValue + (100 * (currentLevel + 1)));
-        score.text = scoreValue.ToString();
+        if (!over)
+        {
+            scoreValue = (scoreValue + (100 * (currentLevel + 1)));
+            score.text = scoreValue.ToString();
+
+            finalScoreVal = scoreValue;
+            Debug.Log("Final Score Value: " + finalScoreVal);
+        }
     }
 
     public void checkForRows()
@@ -47,8 +54,6 @@ public class GameManager : MonoBehaviour
                 RowDown(i);
             }
         }
-
-        updateScore();
     }
     bool HasLine(int i)
     {
@@ -79,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void updateLevel()
     {
-        currentLevel = rowsCleared / 5;
+        currentLevel = rowsCleared / 3;
         levelText.text = "Level " + (currentLevel + 1).ToString();
     }
 
@@ -113,5 +118,7 @@ public class GameManager : MonoBehaviour
                 gameOver();
             }
         }
+
+        updateScore();
     }
 }

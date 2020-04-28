@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameOverManager.cs" />
     <Compile Include="Assets\Scripts\InputScripts.cs" />
     <Compile Include="Assets\Scripts\MenuBlocks.cs" />
     <Compile Include="Assets\Scripts\MenuSpawn.cs" />
