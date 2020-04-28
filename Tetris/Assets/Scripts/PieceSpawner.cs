@@ -10,13 +10,13 @@ public class PieceSpawner : MonoBehaviour
 
     public GameObject previewBlock;
     public GameObject nextBlock;
-    //public Vector3 previewPos = new Vector3(500f, 4.1f, 0);
-    public Vector2 previewPos = new Vector2(-3.5f, 1);
+    public Vector3 previewPos;
 
     // Start is called before the first frame update
     void Start()
     {
         hasStarted = GameManager.hasStarted;
+        previewPos = new Vector3(-5f, 14.5f, 0);
         spawnNext();
     }
 
