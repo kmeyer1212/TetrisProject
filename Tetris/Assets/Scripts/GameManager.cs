@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
             score.text = scoreValue.ToString();
 
             finalScoreVal = scoreValue;
-            Debug.Log("Final Score Value: " + finalScoreVal);
         }
     }
 

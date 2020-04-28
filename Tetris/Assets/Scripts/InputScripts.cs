@@ -15,4 +15,9 @@ public class InputScripts : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
+
+    public void controlsView()
+    {
+        SceneManager.LoadScene("Controls", LoadSceneMode.Single);
+    }
 }
