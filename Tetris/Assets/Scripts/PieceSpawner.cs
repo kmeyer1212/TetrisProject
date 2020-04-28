@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class PieceSpawner : MonoBehaviour
 {
     public GameObject[] Pieces;
-    public static bool hasStarted = false;
+    private bool hasStarted;
 
     public GameObject previewBlock;
     public GameObject nextBlock;
-    public Vector2 previewPos = new Vector3(-9f, 4.1f, 0);
+    //public Vector3 previewPos = new Vector3(500f, 4.1f, 0);
+    public Vector2 previewPos = new Vector2(-3.5f, 1);
 
     // Start is called before the first frame update
     void Start()
     {
+        hasStarted = GameManager.hasStarted;
         spawnNext();
     }
 
@@ -36,8 +38,6 @@ public class PieceSpawner : MonoBehaviour
 
             previewBlock = Instantiate(Pieces[Random.Range(0, Pieces.Length)], previewPos, Quaternion.identity);
             previewBlock.GetComponent<TBlock>().enabled = false;
-
-            ScoreScript.scoreValue += 100;
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static int height = 19; //This needs to match the background height
+    public static int height = 20; //This needs to match the background height
     public static int width = 10; //This needs to match the background width
     public static Transform[,] grid = new Transform[width, height];
 
@@ -14,16 +14,27 @@ public class GameManager : MonoBehaviour
     private int rowsCleared = 0;
     public static int currentLevel = 0;
     public static float fallTime = 1.0f;
+    public static bool hasStarted = false;
 
     public Text levelText;
     public Text numLines;
-    
+    public Text score;
+    public static int scoreValue = 0;
 
     public void gameOver()
     {
-        ScoreScript.scoreValue = 0;
-        PieceSpawner.hasStarted = false;
+        scoreValue = 0;
+        hasStarted = false;
+        currentLevel = 0;
+        fallTime = 0;
+        rowsCleared = 0;
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+    }
+
+    public void updateScore()
+    {
+        scoreValue = (scoreValue + (100 * (currentLevel + 1)));
+        score.text = scoreValue.ToString();
     }
 
     public void checkForRows()
@@ -36,6 +47,8 @@ public class GameManager : MonoBehaviour
                 RowDown(i);
             }
         }
+
+        updateScore();
     }
     bool HasLine(int i)
     {
@@ -60,13 +73,13 @@ public class GameManager : MonoBehaviour
         }
 
         ++rowsCleared;
+        numLines.text = rowsCleared.ToString();
         increaseSpeed();
     }
 
     public void updateLevel()
     {
         currentLevel = rowsCleared / 5;
-        Debug.Log("Rows Cleared: " + rowsCleared);
         levelText.text = "Level " + (currentLevel + 1).ToString();
     }
 
