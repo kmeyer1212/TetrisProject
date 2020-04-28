@@ -15,18 +15,21 @@ public class GameManager : MonoBehaviour
     public static int currentLevel = 0;
     public static float fallTime = 1.0f;
     public static bool hasStarted = false;
-    public bool over = false;
+    private bool over = false;
 
     public Text levelText;
     public Text numLines;
     public Text score;
+    public Text goal;
 
     public static int scoreValue = 0;
     public static int finalScoreVal;
+    private static int nextGoal = 3;
 
     public void gameOver()
     {
         over = true;
+        nextGoal = 3;
         scoreValue = 0;
         hasStarted = false;
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
@@ -84,7 +87,10 @@ public class GameManager : MonoBehaviour
     public void updateLevel()
     {
         currentLevel = rowsCleared / 3;
+        nextGoal = (currentLevel + 1) * 3;
+
         levelText.text = "Level " + (currentLevel + 1).ToString();
+        goal.text = nextGoal.ToString();
     }
 
     public void increaseSpeed()
