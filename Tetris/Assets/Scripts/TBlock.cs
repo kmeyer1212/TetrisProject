@@ -47,9 +47,16 @@ public class TBlock : MonoBehaviour
                 AddToGrid();
                 FindObjectOfType<GameManager>().checkForRows();
                 this.enabled = false;
+                tag = "Untagged";
                 FindObjectOfType<PieceSpawner>().spawnNext();
             }
             previousTime = Time.time;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject tempNextBlock = GameObject.FindGameObjectWithTag("currentBlock");
+            FindObjectOfType<PieceSpawner>().saveBlock(tempNextBlock.transform);
         }
     }
 
@@ -65,7 +72,7 @@ public class TBlock : MonoBehaviour
         FindObjectOfType<GameManager>().isGameOver();
     }
 
-    bool ValidMove()
+    public bool ValidMove()
     {
         foreach(Transform children in transform)
         {
