@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         nextGoal = 3;
         scoreValue = 0;
         hasStarted = false;
+        fallTime = 1.0f;
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
