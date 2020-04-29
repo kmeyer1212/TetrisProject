@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void increaseSpeed()
     {
-        fallTime = 1.0f - ((float)currentLevel * 0.1f);
+        fallTime = 1.0f - ((float)currentLevel * 0.5f);
     }
 
     void RowDown(int i)
