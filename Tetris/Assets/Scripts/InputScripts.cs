@@ -20,4 +20,9 @@ public class InputScripts : MonoBehaviour
     {
         SceneManager.LoadScene("Controls", LoadSceneMode.Single);
     }
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
 }
